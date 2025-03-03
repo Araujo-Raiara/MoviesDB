@@ -1,5 +1,5 @@
 # MoviesDB
-Este projeto é um aplicativo Android desenvolvido em Kotlin que consome a API do The Movie Database (TMDB) para exibir informações sobre filmes e séries.
+Este projeto é um aplicativo Android que consome a API do The Movie Database (TMDB) para exibir informações sobre filmes e séries.
 
 🔑 Configuração da API TMDB
 
