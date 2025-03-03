@@ -4,10 +4,11 @@ import com.example.moviesdb.core.Constants
 import com.example.moviesdb.core.yearMonthDayToYear
 import com.example.moviesdb.data.model.MediaItemResponse
 import com.example.moviesdb.domain.model.MediaItem
+import com.example.moviesdb.domain.model.MediaType
 
 fun MediaItemResponse.movieToMediaItem(): MediaItem {
     val posterImage = if(posterPath != null) {
-        Constants.Network.IMAGE_BASE_URL + posterPath
+        Constants.Network.IMAGE_BASE_URL_500dp + posterPath
     } else {
         null
     }
@@ -18,6 +19,6 @@ fun MediaItemResponse.movieToMediaItem(): MediaItem {
         releaseYear = releaseYear.orEmpty(),
         rating = rating?.toFloat(),
         posterImageUrl = posterImage,
-        mediaType = "movie"
+        mediaType = MediaType.MOVIE
     )
 }

@@ -6,5 +6,5 @@ data class MediaItem(
     val releaseYear: String?,
     val rating: Float?,
     val posterImageUrl: String?,
-    val mediaType: String,
+    val mediaType: MediaType,
 )

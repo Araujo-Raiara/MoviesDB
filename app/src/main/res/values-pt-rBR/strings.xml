@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoviesDB</string>
+    <string name="popular_movies">Filmes populares</string>
+    <string name="popular_tv_shows">Melhores seriados</string>
+    <string name="movie_rating">Nota&#160;</string>
+    <string name="movie_rating_out_of_ten">&#160;/&#160;10</string>
+    <string name="movie_rating_value">%.1f</string>
+    <string name="detail_screen_topbar_label">Detalhes</string>
+    <string name="default_null_text">Não disponível</string>
+    <string name="release_year_value">Lançado em %s</string>
+    <string name="value_minutes">%d minutos</string>
+    <string name="error_text">Algo deu errado ao buscar os dados. Tente novamente.</string>
+    <string name="error_button_text">Tente novamente</string>
+</resources>

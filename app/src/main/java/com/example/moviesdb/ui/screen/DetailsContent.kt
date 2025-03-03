@@ -1,5 +1,6 @@
 package com.example.moviesdb.ui.screen
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,29 +11,39 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import coil3.compose.AsyncImage
+import com.example.moviesdb.R
 import com.example.moviesdb.domain.model.DetailsItem
 import com.example.moviesdb.ui.theme.backgroundColor
+import com.example.moviesdb.ui.theme.posterHeight
+import com.example.moviesdb.ui.theme.posterMargin
+import com.example.moviesdb.ui.theme.spacing12
+import com.example.moviesdb.ui.theme.spacing16
+import com.example.moviesdb.ui.theme.spacing24
+import com.example.moviesdb.ui.theme.spacing28
+import com.example.moviesdb.ui.theme.spacing4
+import com.example.moviesdb.ui.theme.spacing8
 import com.example.moviesdb.ui.theme.textPrimaryColor
 import com.example.moviesdb.ui.theme.textSecondaryColor
+import com.example.moviesdb.ui.theme.textSize24
 
 @Composable
 fun DetailsContent(
@@ -43,70 +54,140 @@ fun DetailsContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .background(backgroundColor)
-            .padding(16.dp),
     ) {
+        DetailsHeader(detailsItem)
+        Spacer(modifier = Modifier.height(spacing12))
+        DetailsSubHeader(
+            details = detailsItem
+        )
+        Spacer(modifier = Modifier.height(spacing12))
+        detailsItem.description?.let {
+            Text(
+                modifier = Modifier.padding(spacing12),
+                text = detailsItem.description,
+                color = textPrimaryColor
+            )
+        }
+    }
+}
+
+@Composable
+fun DetailsHeader(detailsItem: DetailsItem) {
+    ConstraintLayout {
+        val (backdrop, poster, title) = createRefs()
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
+                .constrainAs(backdrop) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
                 .clip(
                     RoundedCornerShape(
-                        bottomEnd = 24.dp,
-                        bottomStart = 24.dp
+                        bottomEnd = spacing24,
+                        bottomStart = spacing24
                     )
                 ),
             model = detailsItem.backdropImageUrl,
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        AsyncImage(
+            modifier = Modifier
+                .height(posterHeight)
+                .shadow(spacing24, spotColor = Color.White, clip = true)
+                .constrainAs(poster) {
+                    start.linkTo(backdrop.start, spacing28)
+                    top.linkTo(backdrop.bottom, posterMargin)
+                }
+                .clip(RoundedCornerShape(spacing16)),
+            model = detailsItem.posterImageUrl,
+            contentDescription = null,
+        )
         Text(
+            modifier = Modifier.constrainAs(title) {
+                top.linkTo(backdrop.bottom, spacing16)
+                start.linkTo(poster.end, spacing16)
+                end.linkTo(parent.end, spacing16)
+                width = Dimension.fillToConstraints
+            },
             text = detailsItem.title.orEmpty(),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = textSize24,
                 color = textPrimaryColor,
                 fontWeight = FontWeight.SemiBold
             )
         )
-        Spacer(modifier = Modifier.height(12.dp))
-        DetailsRow(
-            releaseDate = detailsItem.releaseYear.orEmpty(),
-            runtime = detailsItem.runtime,
-            genre = detailsItem.genre
-        )
-        Spacer(modifier = Modifier.height(34.dp))
-        Text(text = detailsItem.description, color = textPrimaryColor)
     }
 }
 
+@Composable
+fun DetailsSubHeader(
+    details: DetailsItem,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(spacing8)
+        ) {
+            details.releaseYear?.let {
+                DetailsItem(
+                    icon = R.drawable.ic_calendar,
+                    text = stringResource(R.string.release_year_value, details.releaseYear)
+                )
+            }
+            details.runtime?.let {
+                DetailsItem(
+                    icon = R.drawable.ic_clock,
+                    text = stringResource(R.string.value_minutes, details.runtime)
+                )
+            }
+        }
+
+        details.genre?.let {
+            GenreItems(details.genre)
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun GenreItems(list: List<String>) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(spacing8)
+    ) {
+        list.forEach {
+            SuggestionChip(
+                modifier = Modifier,
+                onClick = {},
+                label = { Text(text = it, color = textSecondaryColor) }
+            )
+        }
+    }
+}
 
 @Composable
-fun DetailsRow(releaseDate: String, runtime: String, genre: String) {
+fun DetailsItem(
+    modifier: Modifier = Modifier,
+    @DrawableRes icon: Int,
+    text: String,
+) {
     Row(
-        horizontalArrangement = Arrangement.Center,
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(spacing4),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.padding(end = 4.dp),
-            imageVector = Icons.Filled.DateRange,
+            painter = painterResource(icon),
             tint = textSecondaryColor,
             contentDescription = null
         )
-        Text(text = releaseDate, color = textSecondaryColor)
-        Spacer(modifier = Modifier.width(12.dp))
-        Icon(
-            modifier = Modifier.padding(end = 4.dp),
-            imageVector = Icons.Filled.PlayArrow,
-            tint = textSecondaryColor,
-            contentDescription = null
+        Text(
+            text = text, color = textSecondaryColor
         )
-        Text(text = runtime, color = textSecondaryColor)
-        Spacer(modifier = Modifier.width(12.dp))
-        Icon(
-            modifier = Modifier.padding(end = 4.dp),
-            imageVector = Icons.Filled.Person,
-            tint = textSecondaryColor,
-            contentDescription = null
-        )
-        Text(text = genre, color = textSecondaryColor)
     }
 }
+
 

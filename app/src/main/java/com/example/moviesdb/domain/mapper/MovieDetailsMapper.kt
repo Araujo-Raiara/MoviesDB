@@ -7,18 +7,24 @@ import com.example.moviesdb.domain.model.DetailsItem
 
 fun MediaDetailResponse.toMovieDetailsItem(): DetailsItem {
     val backdropImageUrl = if (backDropPath != null) {
-        Constants.Network.IMAGE_BASE_URL + backDropPath
+        Constants.Network.IMAGE_BASE_URL_500dp + backDropPath
+    } else {
+        null
+    }
+    val posterImage = if (posterPath != null) {
+        Constants.Network.IMAGE_BASE_URL_500dp + posterPath
     } else {
         null
     }
     val releaseYear = releaseDate?.yearMonthDayToYear()
     return DetailsItem(
-        genre = genres?.map { it.name }?.joinToString().orEmpty(),
+        genre = genres?.mapNotNull { it.name },
         title = title,
         releaseYear = releaseYear.orEmpty(),
         backdropImageUrl = backdropImageUrl,
+        posterImageUrl = posterImage,
         rating = rating?.toFloat(),
-        runtime = runtime.toString(),
+        runtime = runtime,
         description = overview.orEmpty()
     )
 }

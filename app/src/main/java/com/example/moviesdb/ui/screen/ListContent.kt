@@ -26,10 +26,15 @@ import androidx.paging.compose.LazyPagingItems
 import coil3.compose.AsyncImage
 import com.example.moviesdb.core.orZero
 import com.example.moviesdb.domain.model.MediaItem
+import com.example.moviesdb.domain.model.MediaType
 import com.example.moviesdb.ui.common.components.RatingText
 import com.example.moviesdb.ui.theme.backgroundColor
 import com.example.moviesdb.ui.theme.backgroundLowContrast
+import com.example.moviesdb.ui.theme.spacing2
+import com.example.moviesdb.ui.theme.spacing4
+import com.example.moviesdb.ui.theme.spacing8
 import com.example.moviesdb.ui.theme.textPrimaryColor
+import com.example.moviesdb.ui.theme.textSize14
 
 private const val TITLE_LINES = 2
 
@@ -38,7 +43,7 @@ fun ListContent(
     modifier: Modifier = Modifier,
     list: LazyPagingItems<MediaItem>,
     triggerLoading: () -> Unit,
-    onClick: (Int, String) -> Unit
+    onClick: (Int, MediaType) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -62,10 +67,10 @@ fun ListContent(
         items(list.itemCount) { index ->
             list[index]?.let { item ->
                 Card(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp).clickable {
+                    modifier = Modifier.padding(horizontal = spacing8, vertical = spacing8).clickable {
                         onClick(item.id.orZero(), item.mediaType)
                     },
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(spacing8),
                     colors = CardDefaults.cardColors(containerColor = backgroundLowContrast),
                 ) {
                     Column(modifier = Modifier.fillMaxWidth()) {
@@ -78,11 +83,11 @@ fun ListContent(
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 5.dp, start = 2.dp, end = 2.dp),
+                                .padding(top = spacing4, start = spacing2, end = spacing2),
                             textAlign = TextAlign.Center,
                             style = TextStyle(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
+                                fontSize = textSize14,
                                 color = textPrimaryColor
                             ),
                             text = "(${item.releaseYear}) ${item.title.orEmpty()}",
@@ -93,7 +98,7 @@ fun ListContent(
                             RatingText(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 5.dp),
+                                    .padding(vertical = spacing4),
                                 item.rating
                             )
                         }

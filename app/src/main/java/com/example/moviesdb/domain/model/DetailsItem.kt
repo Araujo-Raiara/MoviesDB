@@ -1,14 +1,13 @@
 package com.example.moviesdb.domain.model
 
-import com.example.moviesdb.core.Constants.DefaultValues.EMPTY
-
 data class DetailsItem(
-        val genre: String = EMPTY,
-        val title: String? = null,
-        val releaseYear: String? = null,
-        val rating: Float? = null,
-        val backdropImageUrl: String? = null,
-        val runtime: String = EMPTY,
-        val description: String = EMPTY,
-        val isError: Boolean = false,
-    )
+    val genre: List<String>? = null,
+    val title: String? = null,
+    val releaseYear: String? = null,
+    val rating: Float? = null,
+    val backdropImageUrl: String? = null,
+    val posterImageUrl: String? = null,
+    val runtime: Int? = null,
+    val description: String? = null,
+    val isError: Boolean = false,
+)

@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">MoviesDB</string>
-    <string name="popular_movies">Filmes populares</string>
-    <string name="popular_tv_shows">Melhores seriados</string>
-    <string name="movie_rating">Nota&#160;</string>
+    <string name="popular_movies">Popular movies</string>
+    <string name="popular_tv_shows">Best tv shows</string>
+    <string name="movie_rating">Rating&#160;</string>
     <string name="movie_rating_out_of_ten">&#160;/&#160;10</string>
     <string name="movie_rating_value">%.1f</string>
-    <string name="detail_screen_topbar_label">Detail</string>
+    <string name="detail_screen_topbar_label">Details</string>
+    <string name="default_null_text">Not available</string>
+    <string name="release_year_value">Released in %s</string>
+    <string name="value_minutes">%d minutes</string>
+    <string name="error_text">Something went wrong while fetching the data. Please try again.</string>
+    <string name="error_button_text">try again</string>
 </resources>

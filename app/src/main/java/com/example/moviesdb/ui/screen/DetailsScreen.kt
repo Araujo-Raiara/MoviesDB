@@ -1,9 +1,18 @@
 package com.example.moviesdb.ui.screen
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,13 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.moviesdb.R
+import com.example.moviesdb.domain.model.MediaType
 import com.example.moviesdb.ui.theme.backgroundColor
+import com.example.moviesdb.ui.theme.backgroundLowContrast
+import com.example.moviesdb.ui.theme.iconSizeLarge
+import com.example.moviesdb.ui.theme.progressSize
+import com.example.moviesdb.ui.theme.spacing12
+import com.example.moviesdb.ui.theme.spacing16
 import com.example.moviesdb.ui.theme.textPrimaryColor
-import com.example.moviesdb.ui.viewmodel.DetailsUiState
+import com.example.moviesdb.ui.viewmodel.DetailsState
 import com.example.moviesdb.ui.viewmodel.DetailsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -30,7 +50,7 @@ import org.koin.androidx.compose.koinViewModel
 fun DetailsScreen(
     modifier: Modifier = Modifier,
     mediaId: Int,
-    mediaType: String,
+    mediaType: MediaType,
     navController: NavController
 ) {
     val viewModel: DetailsViewModel = koinViewModel()
@@ -40,6 +60,7 @@ fun DetailsScreen(
         viewModel.setupDetails(mediaId, mediaType)
     }
     Scaffold(
+        containerColor = backgroundColor,
         topBar = {
             TopBar(
                 title = stringResource(R.string.detail_screen_topbar_label),
@@ -47,26 +68,68 @@ fun DetailsScreen(
         }
     ) { innerPadding ->
         when (val detailsResult = detailsState) {
-            DetailsUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            DetailsState.Loading -> {
+                LoadingView()
             }
 
-            is DetailsUiState.Success -> {
+            is DetailsState.Success -> {
                 DetailsContent(
                     modifier = Modifier
                         .padding(innerPadding)
                         .fillMaxSize(),
-                    detailsItem = detailsResult.detailsContent
+                    detailsItem = detailsResult.content
                 )
             }
 
             else -> {
-                Text(
-                    modifier = Modifier.fillMaxSize(),
-                    text = "Exception"
-                )
-
+                ErrorView(modifier = modifier.padding(innerPadding), onClick = {
+                    viewModel.setupDetails(mediaId, mediaType)
+                })
             }
+        }
+    }
+}
+
+@Composable
+fun LoadingView() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(progressSize))
+    }
+}
+
+@Composable
+fun ErrorView(
+    modifier: Modifier,
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = spacing16),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Icon(
+            modifier = Modifier.size(iconSizeLarge),
+            painter = painterResource(R.drawable.ic_movie_outlined),
+            contentDescription = null,
+            tint = textPrimaryColor
+        )
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            text = stringResource(R.string.error_text),
+            color = textPrimaryColor,
+        )
+        Spacer(modifier = Modifier.height(spacing12))
+        Button(
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(containerColor = backgroundLowContrast)
+        ) {
+            Text(text = stringResource(R.string.error_button_text), color = textPrimaryColor)
         }
     }
 }

@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.moviesdb.ui.model.TabItem
 import com.example.moviesdb.ui.theme.backgroundColor
 import com.example.moviesdb.ui.theme.backgroundHighContrast
+import com.example.moviesdb.ui.theme.spacing12
+import com.example.moviesdb.ui.theme.spacing24
+import com.example.moviesdb.ui.theme.spacing4
 
 @Composable
 fun MoviesTabs(
@@ -54,14 +56,14 @@ fun MoviesTabs(
                     text = {
                         Row {
                             Icon(painter = painterResource(item.iconId), null)
-                            Spacer(modifier = Modifier.width(10.dp))
+                            Spacer(modifier = Modifier.width(spacing12))
                             Text(
-                                modifier = Modifier.padding(top = 4.dp),
+                                modifier = Modifier.padding(top = spacing4),
                                 text = stringResource(item.textId)
                             )
                         }
                     },
-                    modifier = modifier.padding(top = 24.dp),
+                    modifier = modifier.padding(top = spacing24),
                     selected = selectedTabIndex == index,
                     onClick = {
                         selectedTabIndex = index
