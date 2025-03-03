@@ -16,6 +16,10 @@ coil = "3.1.0"
 moshi-kotlin = "1.15.2"
 okHttp = "4.12.0"
 paging = "3.3.2"
+navigation-compose = "2.8.8"
+appcompat = "1.6.1"
+material = "1.10.0"
+activity = "1.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +46,10 @@ coil-compose-fetcher = { group = "io.coil-kt.coil3", name = "coil-network-okhttp
 moshi-kotlin = {group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi-kotlin"}
 okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp"}
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging"}
+navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose"}
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

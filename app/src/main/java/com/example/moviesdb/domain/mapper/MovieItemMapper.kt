@@ -15,8 +15,9 @@ fun MediaItemResponse.movieToMediaItem(): MediaItem {
     return MediaItem(
         id = id,
         title = title,
-        releaseYear = releaseYear,
+        releaseYear = releaseYear.orEmpty(),
         rating = rating?.toFloat(),
         posterImageUrl = posterImage,
+        mediaType = "movie"
     )
 }

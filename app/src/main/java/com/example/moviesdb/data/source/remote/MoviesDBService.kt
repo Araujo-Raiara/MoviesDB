@@ -17,12 +17,12 @@ interface MoviesDBService {
         @Query("page") page: Int,
     ): MoviesResponse
 
-    @GET("/movie/{movieId}")
+    @GET("movie/{movieId}")
     suspend fun getMovieDetail(
         @Path("movieId") movieId: Int,
     ): MediaDetailResponse
 
-    @GET("/tv/{tvShowId}")
+    @GET("tv/{tvShowId}")
     suspend fun getTvShowDetail(
         @Path("tvShowId") movieId: Int,
     ): MediaDetailResponse

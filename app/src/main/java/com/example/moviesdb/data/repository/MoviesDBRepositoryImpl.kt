@@ -10,6 +10,8 @@ import com.example.moviesdb.data.paging.PopularTvShowPagingSource
 import com.example.moviesdb.data.source.remote.MoviesDBService
 import com.example.moviesdb.domain.repository.MoviesDBRepository
 import kotlinx.coroutines.flow.Flow
+import retrofit2.HttpException
+import java.io.IOException
 
 private val pagingConfig = PagingConfig(
     pageSize = 1,
@@ -33,11 +35,22 @@ class MoviesDBRepositoryImpl(
         ).flow
     }
 
-    override suspend fun getMovieDetail(movieId: Int): MediaDetailResponse {
-        return service.getMovieDetail(movieId)
+    override suspend fun getMovieDetail(movieId: Int): Result<MediaDetailResponse> {
+        return fetchDetailData { service.getMovieDetail(movieId) }
     }
 
-    override suspend fun getTvShowDetail(tvShowId: Int): MediaDetailResponse {
-        return service.getTvShowDetail(tvShowId)
+    override suspend fun getTvShowDetail(tvShowId: Int): Result<MediaDetailResponse> {
+        return fetchDetailData { service.getTvShowDetail(tvShowId) }
+    }
+
+    private suspend fun fetchDetailData(call: suspend () -> MediaDetailResponse): Result<MediaDetailResponse> {
+        return try {
+            val result = call.invoke()
+            Result.success(result)
+        } catch (e: IOException) {
+            Result.failure(e)
+        } catch (e: HttpException) {
+            Result.failure(e)
+        }
     }
 }

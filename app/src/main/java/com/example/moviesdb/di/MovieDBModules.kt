@@ -4,9 +4,12 @@ import com.example.moviesdb.core.Constants.Network.BASE_URL
 import com.example.moviesdb.data.repository.MoviesDBRepositoryImpl
 import com.example.moviesdb.data.source.remote.MoviesDBService
 import com.example.moviesdb.domain.repository.MoviesDBRepository
+import com.example.moviesdb.domain.usecase.GetMovieDetailsUseCase
 import com.example.moviesdb.domain.usecase.GetPopularMoviesUseCase
 import com.example.moviesdb.domain.usecase.GetPopularTvShowsUseCase
-import com.example.moviesdb.ui.viewmodel.MoviesDBViewModel
+import com.example.moviesdb.domain.usecase.GetTvShowDetailsUseCase
+import com.example.moviesdb.ui.viewmodel.DetailsViewModel
+import com.example.moviesdb.ui.viewmodel.ListViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -23,7 +26,10 @@ val moviesDBModules = module {
     single<MoviesDBRepository> { MoviesDBRepositoryImpl(get()) }
     single { GetPopularMoviesUseCase(get()) }
     single { GetPopularTvShowsUseCase(get()) }
-    viewModel { MoviesDBViewModel(get(), get()) }
+    single { GetMovieDetailsUseCase(get()) }
+    single { GetTvShowDetailsUseCase(get()) }
+    viewModel { ListViewModel(get(), get()) }
+    viewModel { DetailsViewModel(get(), get()) }
 }
 
 fun providesRetrofit(): Retrofit {

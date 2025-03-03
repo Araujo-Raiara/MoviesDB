@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesDBRepository {
     fun getPopularMovies(): Flow<PagingData<MediaItemResponse>>
     fun getPopularTvShow(): Flow<PagingData<MediaItemResponse>>
-    suspend fun getMovieDetail(movieId: Int): MediaDetailResponse
-    suspend fun getTvShowDetail(tvShowId: Int): MediaDetailResponse
+    suspend fun getMovieDetail(movieId: Int): Result<MediaDetailResponse>
+    suspend fun getTvShowDetail(tvShowId: Int): Result<MediaDetailResponse>
 }

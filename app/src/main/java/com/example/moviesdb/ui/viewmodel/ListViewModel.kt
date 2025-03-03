@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
-class MoviesDBViewModel(
+class ListViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getPopularTvShowsUseCase: GetPopularTvShowsUseCase,
 ) : ViewModel() {

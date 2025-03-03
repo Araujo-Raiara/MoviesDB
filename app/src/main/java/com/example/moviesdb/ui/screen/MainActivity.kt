@@ -1,9 +1,10 @@
-package com.example.moviesdb
+package com.example.moviesdb.ui.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.moviesdb.ui.screen.MoviesDBScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.moviesdb.ui.navigation.MovieDBNavHost
 import com.example.moviesdb.ui.theme.MoviesDBTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MoviesDBTheme {
-                MoviesDBScreen()
+                MovieDBNavHost(navController = rememberNavController())
             }
         }
     }

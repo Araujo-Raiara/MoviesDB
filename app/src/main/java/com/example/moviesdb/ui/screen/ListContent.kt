@@ -1,6 +1,7 @@
 package com.example.moviesdb.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.compose.LazyPagingItems
 import coil3.compose.AsyncImage
+import com.example.moviesdb.core.orZero
 import com.example.moviesdb.domain.model.MediaItem
 import com.example.moviesdb.ui.common.components.RatingText
 import com.example.moviesdb.ui.theme.backgroundColor
@@ -32,10 +34,11 @@ import com.example.moviesdb.ui.theme.textPrimaryColor
 private const val TITLE_LINES = 2
 
 @Composable
-fun MovieListContent(
+fun ListContent(
     modifier: Modifier = Modifier,
     list: LazyPagingItems<MediaItem>,
-    triggerLoading: () -> Unit
+    triggerLoading: () -> Unit,
+    onClick: (Int, String) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -59,9 +62,11 @@ fun MovieListContent(
         items(list.itemCount) { index ->
             list[index]?.let { item ->
                 Card(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp).clickable {
+                        onClick(item.id.orZero(), item.mediaType)
+                    },
                     shape = RoundedCornerShape(8.dp),
                     colors = CardDefaults.cardColors(containerColor = backgroundLowContrast),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                 ) {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         AsyncImage(

@@ -11,4 +11,8 @@ object Constants {
         const val LANGUAGE_KEY = "language"
         const val LANGUAGE_VALUE = "pt-br"
     }
+
+    object DefaultValues {
+        const val EMPTY = ""
+    }
 }

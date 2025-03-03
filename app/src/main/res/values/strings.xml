@@ -5,4 +5,5 @@
     <string name="movie_rating">Nota&#160;</string>
     <string name="movie_rating_out_of_ten">&#160;/&#160;10</string>
     <string name="movie_rating_value">%.1f</string>
+    <string name="detail_screen_topbar_label">Detail</string>
 </resources>
