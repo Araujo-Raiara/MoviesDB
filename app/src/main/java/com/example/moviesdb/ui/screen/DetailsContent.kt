@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
@@ -25,16 +26,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil3.compose.AsyncImage
 import com.example.moviesdb.R
 import com.example.moviesdb.domain.model.DetailsItem
 import com.example.moviesdb.ui.theme.backgroundColor
+import com.example.moviesdb.ui.theme.badgeMargin
 import com.example.moviesdb.ui.theme.posterHeight
 import com.example.moviesdb.ui.theme.posterMargin
+import com.example.moviesdb.ui.theme.ratingBadge
 import com.example.moviesdb.ui.theme.spacing12
 import com.example.moviesdb.ui.theme.spacing16
 import com.example.moviesdb.ui.theme.spacing24
@@ -61,10 +62,10 @@ fun DetailsContent(
             details = detailsItem
         )
         Spacer(modifier = Modifier.height(spacing12))
-        detailsItem.description?.let {
+        detailsItem.overview?.let {
             Text(
                 modifier = Modifier.padding(spacing12),
-                text = detailsItem.description,
+                text = detailsItem.overview,
                 color = textPrimaryColor
             )
         }
@@ -74,7 +75,7 @@ fun DetailsContent(
 @Composable
 fun DetailsHeader(detailsItem: DetailsItem) {
     ConstraintLayout {
-        val (backdrop, poster, title) = createRefs()
+        val (backdrop, poster, title, rating) = createRefs()
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,6 +119,36 @@ fun DetailsHeader(detailsItem: DetailsItem) {
                 fontWeight = FontWeight.SemiBold
             )
         )
+        detailsItem.rating?.let {
+            Badge(
+                modifier = Modifier.constrainAs(rating) {
+                    top.linkTo(backdrop.bottom, badgeMargin)
+                    end.linkTo(backdrop.end, spacing12)
+                },
+                contentColor = ratingBadge,
+                containerColor = backgroundColor,
+                content = {
+                    Icon(
+                        modifier = Modifier.padding(
+                            start = spacing8,
+                            end = spacing4,
+                            top = spacing4,
+                            bottom = spacing4,
+                        ),
+                        painter = painterResource(R.drawable.ic_star),
+                        contentDescription = null,
+                    )
+                    Text(
+                        modifier = Modifier.padding(
+                            end = spacing8,
+                            top = spacing4,
+                            bottom = spacing4,
+                        ),
+                        text = stringResource(R.string.movie_rating_value, detailsItem.rating),
+                    )
+                })
+        }
+
     }
 }
 

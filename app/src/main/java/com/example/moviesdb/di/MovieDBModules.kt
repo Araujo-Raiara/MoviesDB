@@ -1,6 +1,8 @@
 package com.example.moviesdb.di
 
 import com.example.moviesdb.core.Constants.Network.BASE_URL
+import com.example.moviesdb.data.paging.PopularMoviePagingSource
+import com.example.moviesdb.data.paging.PopularTvShowPagingSource
 import com.example.moviesdb.data.repository.MoviesDBRepositoryImpl
 import com.example.moviesdb.data.source.remote.MoviesDBService
 import com.example.moviesdb.domain.repository.MoviesDBRepository
@@ -23,7 +25,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val moviesDBModules = module {
     single { providesRetrofit() }
     single { providesService(get()) }
-    single<MoviesDBRepository> { MoviesDBRepositoryImpl(get()) }
+    single { PopularTvShowPagingSource(get()) }
+    single { PopularMoviePagingSource(get()) }
+    single<MoviesDBRepository> { MoviesDBRepositoryImpl(get(), get(), get()) }
     single { GetPopularMoviesUseCase(get()) }
     single { GetPopularTvShowsUseCase(get()) }
     single { GetMovieDetailsUseCase(get()) }

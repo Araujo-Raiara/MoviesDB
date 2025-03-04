@@ -19,3 +19,5 @@ val posterHeight = 200.dp
 val progressSize = 70.dp
 
 val iconSizeLarge = 50.dp
+
+val badgeMargin = (-40).dp

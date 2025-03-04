@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 class GetPopularTvShowsUseCase(
     private val repository: MoviesDBRepository
 ) {
-    fun getPopularTvShows(): Flow<PagingData<MediaItem>> {
+    operator fun invoke(): Flow<PagingData<MediaItem>> {
         return repository.getPopularTvShow().map { pagingData ->
             pagingData.map { itemResponse ->
                 itemResponse.tvShowToMediaItem()

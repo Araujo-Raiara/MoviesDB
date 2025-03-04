@@ -15,18 +15,22 @@ dataStore = "1.1.3"
 coil = "3.1.0"
 moshi-kotlin = "1.15.2"
 okHttp = "4.12.0"
-paging = "3.3.2"
+paging = "3.3.6"
 navigation-compose = "2.8.8"
 appcompat = "1.6.1"
 material = "1.10.0"
 activity = "1.10.1"
 constraint = "1.0.1"
+mockk = "1.13.16"
+turbine = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coreKtx" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -48,10 +52,12 @@ coil-compose-fetcher = { group = "io.coil-kt.coil3", name = "coil-network-okhttp
 moshi-kotlin = {group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi-kotlin"}
 okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp"}
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging"}
+androidx-paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging"}
 navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose"}
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

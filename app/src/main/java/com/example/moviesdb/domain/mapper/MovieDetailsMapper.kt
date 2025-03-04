@@ -20,11 +20,11 @@ fun MediaDetailResponse.toMovieDetailsItem(): DetailsItem {
     return DetailsItem(
         genre = genres?.mapNotNull { it.name },
         title = title,
-        releaseYear = releaseYear.orEmpty(),
+        releaseYear = releaseYear,
         backdropImageUrl = backdropImageUrl,
         posterImageUrl = posterImage,
-        rating = rating?.toFloat(),
+        rating = rating,
         runtime = runtime,
-        description = overview.orEmpty()
+        overview = overview
     )
 }

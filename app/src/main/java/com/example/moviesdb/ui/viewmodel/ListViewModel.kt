@@ -27,7 +27,7 @@ class ListViewModel(
     val tvShowState: StateFlow<PagingData<MediaItem>> get() = _tvShowState
 
     fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
-        getPopularMoviesUseCase.getPopularMovies()
+        getPopularMoviesUseCase()
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
             .collect {
@@ -36,7 +36,7 @@ class ListViewModel(
     }
 
     fun getPopularTvShows() = viewModelScope.launch(Dispatchers.IO) {
-        getPopularTvShowsUseCase.getPopularTvShows()
+        getPopularTvShowsUseCase()
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
             .collect {

@@ -15,24 +15,26 @@ import retrofit2.HttpException
 import java.io.IOException
 
 private val pagingConfig = PagingConfig(
-    pageSize = 1,
-    prefetchDistance = 2
+    pageSize = 20,
+    prefetchDistance = 4
 )
 
 class MoviesDBRepositoryImpl(
     private val service: MoviesDBService,
+    private val moviePagingSource: PopularMoviePagingSource,
+    private val tvPagingSource: PopularTvShowPagingSource
 ) : MoviesDBRepository {
     override fun getPopularMovies(): Flow<PagingData<MediaItemResponse>> {
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { PopularMoviePagingSource(service) }
+            pagingSourceFactory = { moviePagingSource }
         ).flow
     }
 
     override fun getPopularTvShow(): Flow<PagingData<MediaItemResponse>> {
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { PopularTvShowPagingSource(service) }
+            pagingSourceFactory = { tvPagingSource }
         ).flow
     }
 

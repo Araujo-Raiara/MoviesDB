@@ -24,8 +24,8 @@ fun MediaDetailResponse.toTvShowDetailsItem(): DetailsItem {
         releaseYear = releaseYear,
         backdropImageUrl = backdropImageUrl,
         posterImageUrl = posterImage,
-        rating = rating?.toFloat(),
+        rating = rating,
         runtime = runtime,
-        description = overview.orEmpty(),
+        overview = overview,
     )
 }

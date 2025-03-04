@@ -17,7 +17,7 @@ fun MediaItemResponse.tvShowToMediaItem(): MediaItem {
         id = id,
         title = name,
         releaseYear = releaseYear,
-        rating = rating?.toFloat(),
+        rating = rating,
         posterImageUrl = posterImage,
         mediaType = MediaType.TV
     )

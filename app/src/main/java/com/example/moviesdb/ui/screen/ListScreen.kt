@@ -32,18 +32,24 @@ fun ListScreen(
         ),
         screens = listOf(
             {
-                ListContent(list = moviePopularList, triggerLoading = {
-                    viewModel.getPopularMovies()
-                }, onClick = { id, mediaType ->
-                    navController.navigate(route = "${NavigationItem.Detail.route}/${id}/${mediaType}")
-                })
+                ListContent(
+                    list = moviePopularList,
+                    triggerLoading = {
+                        viewModel.getPopularMovies()
+                    },
+                    onClick = { id, mediaType ->
+                        navController.navigate(route = "${NavigationItem.Detail.route}/${id}/${mediaType}")
+                    })
             },
             {
-                ListContent(list = tvShowPopularList, onClick = { id, mediaType ->
-                    navController.navigate(route = "${NavigationItem.Detail.route}/${id}/${mediaType}")
-                }, triggerLoading = {
-                    viewModel.getPopularTvShows()
-                }
+                ListContent(
+                    list = tvShowPopularList,
+                    onClick = { id, mediaType ->
+                        navController.navigate(route = "${NavigationItem.Detail.route}/${id}/${mediaType}")
+                    },
+                    triggerLoading = {
+                        viewModel.getPopularTvShows()
+                    }
                 )
             }
         )

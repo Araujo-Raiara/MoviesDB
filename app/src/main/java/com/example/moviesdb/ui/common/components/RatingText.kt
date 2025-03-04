@@ -20,7 +20,7 @@ import com.example.moviesdb.ui.theme.textSecondaryColor
 @Composable
 fun RatingText(
     modifier: Modifier = Modifier,
-    rating: Float
+    rating: Double
 ) {
     val ratingColor = when {
         rating < 5 -> textRatingLow

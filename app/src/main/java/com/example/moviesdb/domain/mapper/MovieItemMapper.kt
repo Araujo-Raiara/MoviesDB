@@ -7,7 +7,7 @@ import com.example.moviesdb.domain.model.MediaItem
 import com.example.moviesdb.domain.model.MediaType
 
 fun MediaItemResponse.movieToMediaItem(): MediaItem {
-    val posterImage = if(posterPath != null) {
+    val posterImage = if (posterPath != null) {
         Constants.Network.IMAGE_BASE_URL_500dp + posterPath
     } else {
         null
@@ -17,7 +17,7 @@ fun MediaItemResponse.movieToMediaItem(): MediaItem {
         id = id,
         title = title,
         releaseYear = releaseYear.orEmpty(),
-        rating = rating?.toFloat(),
+        rating = rating,
         posterImageUrl = posterImage,
         mediaType = MediaType.MOVIE
     )

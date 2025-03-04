@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingSource.LoadResult
 import com.example.moviesdb.core.orOne
 import com.example.moviesdb.data.model.MediaItemResponse
-import com.example.moviesdb.data.model.MoviesResponse
+import com.example.moviesdb.data.model.MediaResponse
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -13,7 +13,7 @@ private const val INCREMENT = 1
 
 suspend fun networkCallToResultObject(
     params: PagingSource.LoadParams<Int>,
-    networkCall: suspend (page: Int) -> MoviesResponse
+    networkCall: suspend (page: Int) -> MediaResponse
 ): LoadResult<Int, MediaItemResponse> {
     try {
         val currentPage = params.key.orOne()
